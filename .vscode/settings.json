@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "teste.C": "cpp",
+        "Hello_World.C": "cpp"
+    },
+    "code-runner.runInTerminal": true,
+    "code-runner.showRunIconInEditorTitleMenu": true,
+}
