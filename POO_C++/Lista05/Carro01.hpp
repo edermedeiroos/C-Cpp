@@ -23,8 +23,6 @@ class Carro {
             setValor(valor);
             setQuilometros(km);
             setCombustivel(combustivel);
-
-            exibirInformacoes();
         }
 
         void atualizarInformacoes(string marca="", string modelo="", int ano_fabricacao=0, int ano_modelo=0, double valor=0, double km=0, double combustivel=0) {
@@ -42,8 +40,6 @@ class Carro {
                 setQuilometros(km);
             if (combustivel != 0) 
                 setCombustivel(combustivel);
-
-            exibirInformacoes();
         }
 
         void limparInformacoes() {
@@ -54,8 +50,6 @@ class Carro {
             setValor(0);
             setQuilometros(0);
             setCombustivel(0);
-
-            exibirInformacoes();
         }
 
     private:
