@@ -1,14 +1,27 @@
 #include <iostream>
 #include <string>
-#include "Carro01.hpp"
+#include "Carro03.hpp"
 using namespace std;
+
+int Carro::nCarros = 0;
+
+int Carro::getNCarros() {
+    return nCarros;
+}
+
+void Carro::aumenta1Carro() {
+    Carro::nCarros += 1;
+}
+
+void Carro::zeraContador() {
+    Carro::nCarros = 0;
+}
+
 
 int main() {
     Carro carros[10];
 
-    int indice_carro = 0;
-
-    while (indice_carro < 10) {
+    while (Carro::getNCarros() < 10) {
 
         // MENU
         cout << "[1] Cadastrar Carro \n[2] Exibir Carro\n[3] Exibir todos os Carros\n[4] Limpar dados de um Carro\n[5] Limpar todos os cadastros\n[6] Sair" << endl;
@@ -38,10 +51,10 @@ int main() {
             cout << "Combustível do carro: ";
             cin >> combustivel;
 
-            carros[indice_carro].cadastrarCarro(marca, modelo, ano_de_fabricacao, ano_do_modelo, valor, km, combustivel);
+            carros[Carro::getNCarros()].cadastrarCarro(marca, modelo, ano_de_fabricacao, ano_do_modelo, valor, km, combustivel);
             cout << "\n-------------------------\n";
 
-            indice_carro += 1;
+            Carro::aumenta1Carro();
 
         } else if (opcao == 2) { // Exibir Carro
             cout << "- Exibir Carro" << endl;
@@ -49,7 +62,7 @@ int main() {
             int indice;
             cin >> indice;
 
-            if (indice >= indice_carro) {
+            if (indice >= Carro::getNCarros()) {
                 cout << "*Indice indisponível*" << endl;
             } else {
                 cout << "\n-------------------------\n";
@@ -60,7 +73,7 @@ int main() {
         } else if (opcao == 3) { // Exibir Carros
             cout << "- Exibir todos os carros" << endl;
 
-            for (int i = 0; i < indice_carro; i++) {
+            for (int i = 0; i < Carro::getNCarros(); i++) {
                 cout << "Carro [" << i << "]:" << endl;
                 cout << "\n-------------------------\n";
                 carros[i].exibirInformacoes();
@@ -73,25 +86,23 @@ int main() {
             int indice;
             cin >> indice;
 
-            if (indice >= indice_carro) {
+            if (indice >= Carro::getNCarros()) {
                 cout << "*Indice indisponível*" << endl;
             } else {
                 carros[indice].limparInformacoes();
                 cout << "\n-------------------------\n";
             }
-
-            indice_carro -= 1;
             
         } else if (opcao == 5) { // Limpar Carros
             cout << "- Limpar todos os carros" << endl;
 
-            for (int i = 0; i < indice_carro; i++) {
+            for (int i = 0; i < Carro::getNCarros(); i++) {
                 cout << "Carro [" << i << "]:" << endl;
                 carros[i].limparInformacoes();
                 cout << "\n-------------------------\n";
             }
 
-            indice_carro = 0;
+            Carro::zeraContador();
             
         } else if (opcao == 6) { // Sair
             cout << "- Encerrando Programa" << endl;
