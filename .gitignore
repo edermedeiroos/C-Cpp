@@ -55,3 +55,8 @@ Mkfile.old
 dkms.conf
 .vscode/settings.json
 .vscode/settings.json
+
+# Examples Files
+Exemplo 1.cpp
+Exemplo 2.cpp
+Exemplo 3.cpp
