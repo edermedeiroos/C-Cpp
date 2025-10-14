@@ -2,6 +2,14 @@
 #include <string>
 using namespace std;
 
+class Jogo { 
+    public:
+        static int totalPersonagens;
+        static int getTotalPersonagens() {
+            return totalPersonagens;
+        }
+};
+
 class Personagem {
     private:
         string nome;
@@ -37,13 +45,5 @@ class Personagem {
 
         void retirar_vida(double dano) {
             vida -= dano;
-        }
-};
-
-class Jogo { 
-    public:
-        static int totalPersonagens;
-        static int getTotalPersonagens() {
-            return totalPersonagens;
         }
 };
