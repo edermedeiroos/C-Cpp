@@ -43,5 +43,7 @@ int tamanhoLista(LISTA* l) {
 }
 
 void exibirElemento(LISTA* l) {
-    for 
+    for (int i=0; i < l->nElem; i++) {
+        cout << l->A[i].chave << endl;
+    }
 }
