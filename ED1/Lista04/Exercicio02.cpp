@@ -29,8 +29,12 @@ bool inserirElemento(LISTA* l, TIPOCHAVE chave, int posicao) {
         l->A[i] = l->A[i - 1];
     }
 
-    l->A[posicao].chave = chave;
+    REGISTRO novoRegistro;
+    novoRegistro.chave = chave;
+    l->A[posicao] = novoRegistro;
+
     l->nElem++;
+
     return true;
 }
 
@@ -70,4 +74,22 @@ int buscarElemento(LISTA* l, TIPOCHAVE chave) {
 
 void reinicializarLista(LISTA* l) {
     l->nElem = 0;
+}
+
+int main() {
+    LISTA lista;
+    inicializarLista(&lista);
+
+    for (int i=0; i<5; i++) {
+        int chave, posicao;
+
+        cout << "Elemento à ser inserido na lista: ";
+        cin >> chave;
+        cout << "Posição de inserção: ";
+        cin >> posicao;
+
+        inserirElemento(&lista, chave, posicao);
+    }
+
+    exibirLista(&lista);
 }
