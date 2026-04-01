@@ -29,11 +29,13 @@ PONT_PESSOA inicializaArvore(string n, string sn, string dn) {
 }
 
 PONT_PESSOA buscaPessoa(PONT_PESSOA pessoa, PONT_PESSOA raiz){
-    if (raiz == nullptr) return nullptr;
-    string pessoa_n = pessoa->nome;
-    string pessoa_sn = pessoa->sobre_nome;
-    string pessoa_dn = pessoa->data_nascimento;
-    if (raiz->nome == pessoa_n && raiz->sobre_nome == pessoa_sn && raiz->data_nascimento == pessoa_dn) return raiz;
+    if (!raiz || !pessoa) return nullptr;
+    
+    if (
+        raiz->nome == pessoa->nome && \
+        raiz->sobre_nome == pessoa->sobre_nome && \
+        raiz->data_nascimento == pessoa->data_nascimento
+    ) return raiz;
 
     PONT_PESSOA irmao = raiz->prox_irmao;
     PONT_PESSOA resp_irmao = buscaPessoa(pessoa, irmao);
@@ -51,18 +53,13 @@ PONT_PESSOA buscaPessoa(PONT_PESSOA pessoa, PONT_PESSOA raiz){
 }
 
 bool inserePessoa(string tipo_pessoa, PONT_PESSOA raiz, PONT_PESSOA pessoa, PONT_PESSOA pessoa_filho) {
-    PONT_PESSOA filho = buscaPessoa(pessoa_filho, raiz);
-    if (!filho) return(false);
-
-    string pessoa_n = pessoa->nome;
-    string pessoa_sn = pessoa->sobre_nome;
-    string pessoa_dn = pessoa->data_nascimento;
+    if (!pessoa_filho || !pessoa) return(false);
 
     if (tipo_pessoa == "irmao") {
-        if (!filho->prox_irmao) {
-            filho->prox_irmao = pessoa;
+        if (!pessoa_filho->prox_irmao) {
+            pessoa_filho->prox_irmao = pessoa;
         } else {
-            PONT_PESSOA atual = filho->prox_irmao;
+            PONT_PESSOA atual = pessoa_filho->prox_irmao;
             while (atual->prox_irmao) {
                 atual = atual->prox_irmao;
             }
@@ -70,12 +67,12 @@ bool inserePessoa(string tipo_pessoa, PONT_PESSOA raiz, PONT_PESSOA pessoa, PONT
         }
         return(true);
     }
-    else if (tipo_pessoa == "pai" && !filho->pai) {
-        filho->pai = pessoa;
+    else if (tipo_pessoa == "pai" && !pessoa_filho->pai) {
+        pessoa_filho->pai = pessoa;
         return(true);
     }
-    else if (tipo_pessoa == "mae" && !filho->mae) {
-        filho->mae = pessoa;
+    else if (tipo_pessoa == "mae" && !pessoa_filho->mae) {
+        pessoa_filho->mae = pessoa;
         return(true);
     };
 
