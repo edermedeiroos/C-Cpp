@@ -59,11 +59,7 @@ bool inserePessoa(string tipo_pessoa, PONT_PESSOA pessoa, PONT_PESSOA pessoa_fil
         if (!pessoa_filho->prox_irmao) {
             pessoa_filho->prox_irmao = pessoa;
         } else {
-            PONT_PESSOA atual = pessoa_filho->prox_irmao;
-            while (atual->prox_irmao) {
-                atual = atual->prox_irmao;
-            }
-            atual->prox_irmao = pessoa;
+            inserePessoa("irmao", pessoa, pessoa_filho->prox_irmao);
         }
 
         pessoa->pai = pessoa_filho->pai;
@@ -72,33 +68,58 @@ bool inserePessoa(string tipo_pessoa, PONT_PESSOA pessoa, PONT_PESSOA pessoa_fil
     }
     else if (tipo_pessoa == "pai" && !pessoa_filho->pai) {
         pessoa_filho->pai = pessoa;
+
+        if (pessoa_filho->prox_irmao) {
+            inserePessoa("pai", pessoa, pessoa_filho->prox_irmao);
+        }
+
         return(true);
     }
     else if (tipo_pessoa == "mae" && !pessoa_filho->mae) {
         pessoa_filho->mae = pessoa;
+
+        if (pessoa_filho->prox_irmao) {
+            inserePessoa("mae", pessoa, pessoa_filho->prox_irmao);
+        }
+
         return(true);
     };
 
     return(false);
 }
 
+void exibirIrmaos(PONT_PESSOA raiz) {
+    cout << "[";
+    PONT_PESSOA atual = raiz;
+    while (atual) {
+        cout << atual->nome;
+        atual = atual->prox_irmao;
+        if (atual) cout << " - ";
+    }
+    cout << "]";
+}
+
+void exibirArvore(PONT_PESSOA raiz);
+
+void exibirPais(PONT_PESSOA raiz) {
+    if (!raiz->pai && !raiz->mae) return;
+
+    if (raiz->pai) {
+        cout << "Linhagem Paterna de "; exibirIrmaos(raiz); cout << ": ";
+        exibirArvore(raiz->pai);
+    }
+    if (raiz->mae) {
+        cout << "Linhagem Materna de "; exibirIrmaos(raiz); cout << ": ";
+        exibirArvore(raiz->mae);
+    }
+}
+
 void exibirArvore(PONT_PESSOA raiz) {
     if (!raiz) return;
-    
-    cout << raiz->nome << " " << raiz->sobre_nome;
-    
-    if (raiz->pai || raiz->mae) {
-        cout << " (";
-        if (raiz->pai) exibirArvore(raiz->pai);
-        if (raiz->pai && raiz->mae) cout << ", ";
-        if (raiz->mae) exibirArvore(raiz->mae);
-        cout << ")";
-    }
 
-    if (raiz->prox_irmao) {
-        cout << " | Irmão(s): ";
-        exibirArvore(raiz->prox_irmao);
-    };
+    exibirIrmaos(raiz);
+    cout << endl;
+    exibirPais(raiz);
 }
 
 int main() {
@@ -116,8 +137,8 @@ int main() {
     PONT_PESSOA avo4 = criaPessoa("Marcelino", "Medeiros", "26/02/1997");
 
     inserePessoa("irmao", irmao1, eu);
-    inserePessoa("mae", irmao1, eu);
-    inserePessoa("pai", irmao1, eu);
+    inserePessoa("mae", mae, eu);
+    inserePessoa("pai", pai, eu);
     inserePessoa("irmao", tio1, mae);
     inserePessoa("irmao", tio2, mae);
     inserePessoa("irmao", tio3, pai);
@@ -127,5 +148,6 @@ int main() {
     inserePessoa("mae", avo3, pai);
     inserePessoa("pai", avo4, pai);
 
+    cout << " --- ARVORE GENEALOGICA --- " << endl << endl;
     exibirArvore(eu);
 }
